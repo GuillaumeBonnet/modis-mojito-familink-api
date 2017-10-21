@@ -43,12 +43,14 @@ public class RestContactController extends AbstractRestController{
 	
 	@RequestMapping(path = "/contact", method = RequestMethod.POST, consumes = "application/json;charset=UTF-8")
 	@ResponseBody
-	public void createContact(@RequestBody Contact contact, @PathVariable("idGroup") String idGroup) throws Exception {
+	public Contact createContact(@RequestBody Contact contact, @PathVariable("idGroup") String idGroup) throws Exception {
+		Contact varRetourne = null;
 		try {
-			contactServiceRepository.create(contact, Integer.parseInt(idGroup));
+			varRetourne = contactServiceRepository.create(contact, Integer.parseInt(idGroup));
 		} catch (Exception e) {
 			throw e;
 		}
+		return varRetourne;
 	}
 
 	// ********** UPDATE CONTACT ********** //

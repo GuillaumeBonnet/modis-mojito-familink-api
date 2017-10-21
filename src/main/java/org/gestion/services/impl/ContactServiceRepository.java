@@ -26,7 +26,7 @@ public class ContactServiceRepository implements IContactService {
 	private GroupeRepository groupeRepository;
 
 	@Override
-	public void create(Contact nouveauContact, Integer idGroup) throws FunctionalException {
+	public Contact create(Contact nouveauContact, Integer idGroup) throws FunctionalException {
 
 		// recherche du groupe courant dans la base de données à partir de sonid
 		// (id obtenu via l'URL)
@@ -53,13 +53,15 @@ public class ContactServiceRepository implements IContactService {
 		// ajout du matching groupe-contact côté contact et crééation du contact
 		groupes.add(groupeSaved);
 		nouveauContact.setGroupes(groupes);
-		contactRepository.save(nouveauContact);
+		Contact varRetourne = contactRepository.save(nouveauContact);
 
 		// matching groupe-contact côté contact, update de la liste de contact
 		// du groupe trouvé
 		contacts.add(nouveauContact);
 		groupeSaved.setContacts(contacts);
 		groupeRepository.save(groupeSaved);
+		
+		return varRetourne;
 	}
 
 	@Override
